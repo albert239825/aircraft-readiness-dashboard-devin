@@ -1,0 +1,27 @@
+<div class="classification-banner">
+  UNCLASSIFIED // FOR DEMO PURPOSES ONLY
+</div>
+
+<mat-toolbar color="primary" *ngIf="!isLoginPage() && authService.isAuthenticated()">
+  <span>{{ title }}</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/aircraft" routerLinkActive="active">Aircraft</button>
+  <button mat-button routerLink="/work-orders" routerLinkActive="active"
+    *ngIf="authService.hasAnyRole(['maintainer', 'admin'])">Work Orders</button>
+  <span class="user-info">{{ authService.getUsername() }}</span>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+
+<div class="classification-banner classification-banner-bottom">
+  UNCLASSIFIED // FOR DEMO PURPOSES ONLY
+</div>

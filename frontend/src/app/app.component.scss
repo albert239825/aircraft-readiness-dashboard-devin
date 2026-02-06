@@ -1,0 +1,35 @@
+.classification-banner {
+    background-color: #2d5016;
+    color: #ffffff;
+    text-align: center;
+    padding: 4px 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-family: monospace;
+    z-index: 1000;
+    flex-shrink: 0;
+}
+
+.classification-banner-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.user-info {
+    margin-left: 24px;
+    padding: 0 16px;
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+button[routerLinkActive="active"] {
+    background: rgba(255, 255, 255, 0.1);
+}

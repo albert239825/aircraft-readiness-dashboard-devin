@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>
+    {{ isEditMode ? 'Edit Work Order' : 'Create Work Order' }}
+</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="form" class="work-order-form">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Aircraft Tail Number</mat-label>
+            <mat-select formControlName="tailNumber" required>
+                <mat-option *ngFor="let a of aircraft" [value]="a.tailNumber">
+                    {{ a.tailNumber }} - {{ a.aircraftType }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('tailNumber')?.invalid && form.get('tailNumber')?.touched">
+                {{ getErrorMessage('Tail Number') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" placeholder="Work order title" required>
+            <mat-error *ngIf="form.get('title')?.invalid && form.get('title')?.touched">
+                {{ getErrorMessage('Title') }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" placeholder="Detailed description of the work order"
+                rows="4"></textarea>
+        </mat-form-field>
+
+        <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Priority</mat-label>
+                <mat-select formControlName="priority" required>
+                    <mat-option value="LOW">Low</mat-option>
+                    <mat-option value="MED">Medium</mat-option>
+                    <mat-option value="HIGH">High</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status" required>
+                    <mat-option value="Draft">Draft</mat-option>
+                    <mat-option value="Submitted">Submitted</mat-option>
+                    <mat-option value="Approved">Approved</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <mat-error *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </mat-error>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()" [disabled]="isLoading">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isLoading">
+        <mat-spinner diameter="20" *ngIf="isLoading" class="button-spinner"></mat-spinner>
+        <span *ngIf="!isLoading">{{ isEditMode ? 'Update' : 'Create' }}</span>
+    </button>
+</mat-dialog-actions>

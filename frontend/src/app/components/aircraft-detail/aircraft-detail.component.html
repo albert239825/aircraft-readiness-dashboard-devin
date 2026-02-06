@@ -1,0 +1,60 @@
+<div class="dialog-container">
+    <div *ngIf="isLoading" class="loading">
+        <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <mat-error *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+    </mat-error>
+
+    <div *ngIf="aircraft && !isLoading">
+        <h2 mat-dialog-title>
+            {{ aircraft.tailNumber }}
+            <span class="aircraft-type">{{ aircraft.aircraftType }}</span>
+        </h2>
+
+        <mat-dialog-content>
+            <div class="info-section">
+                <div class="info-row">
+                    <span class="label">Base:</span>
+                    <span class="value">{{ aircraft.base }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Status:</span>
+                    <span class="status-badge" [ngClass]="getStatusClass(aircraft.status)">
+                        {{ aircraft.status }}
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Next Inspection:</span>
+                    <span class="value">{{ aircraft.nextInspectionDate | date:'mediumDate' }}</span>
+                </div>
+            </div>
+
+            <div class="work-orders-section" *ngIf="aircraft.workOrders && aircraft.workOrders.length > 0">
+                <h3>Active Work Orders</h3>
+                <mat-list>
+                    <mat-list-item *ngFor="let wo of aircraft.workOrders">
+                        <div matListItemTitle>
+                            <span class="wo-id">{{ wo.workOrderId }}</span> - {{ wo.title }}
+                        </div>
+                        <div matListItemLine>
+                            <span class="priority-badge" [ngClass]="getPriorityClass(wo.priority)">{{ wo.priority
+                                }}</span>
+                            <span class="wo-status">{{ wo.status }}</span>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+
+            <div class="no-work-orders" *ngIf="!aircraft.workOrders || aircraft.workOrders.length === 0">
+                <mat-icon>check_circle</mat-icon>
+                <p>No active work orders</p>
+            </div>
+        </mat-dialog-content>
+
+        <mat-dialog-actions align="end">
+            <button mat-button (click)="close()">Close</button>
+        </mat-dialog-actions>
+    </div>
+</div>

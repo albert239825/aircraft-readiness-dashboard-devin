@@ -1,0 +1,32 @@
+.work-order-form {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0;
+    min-width: 400px;
+}
+
+.full-width {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.half-width {
+    flex: 1;
+    margin-bottom: 16px;
+}
+
+.error-message {
+    margin-top: 8px;
+    text-align: center;
+}
+
+.button-spinner {
+    display: inline-block;
+    margin-right: 8px;
+}
