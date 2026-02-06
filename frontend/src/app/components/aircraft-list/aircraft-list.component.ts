@@ -37,6 +37,13 @@ export class AircraftListComponent implements OnInit {
     this.aircraftService.getAircraft().subscribe({
       next: (aircraft) => {
         this.dataSource.data = aircraft;
+        // Set paginator and sort after data is loaded
+        if (this.paginator) {
+          this.dataSource.paginator = this.paginator;
+        }
+        if (this.sort) {
+          this.dataSource.sort = this.sort;
+        }
         this.isLoading = false;
       },
       error: (err) => {
@@ -48,8 +55,13 @@ export class AircraftListComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+    // Set paginator and sort initially
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    // Reload to ensure they're connected
+    if (this.dataSource.data.length === 0) {
+      this.loadAircraft();
+    }
   }
 
   applyFilter(event: Event): void {
